@@ -376,6 +376,21 @@
             flex-wrap: wrap;
         }
 
+        /* non-clickable demo style for specific buttons */
+        .social-icon-link.non-clickable {
+            cursor: default;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: none;
+        }
+
+        .social-icon-link.non-clickable:hover {
+            background: rgba(255,255,255,0.04);
+            transform: none;
+            color: var(--text-light);
+        }
+
         .social-icon-link {
             background: rgba(255,255,255,0.03);
             padding: 0.6rem 1.2rem;
@@ -390,7 +405,7 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .social-icon-link:hover {
+        .social-icon-link:not(.non-clickable):hover {
             background: var(--glow-purple);
             color: #000;
             transform: translateY(-2px);
@@ -448,13 +463,15 @@
         </div>
     </nav>
 
-    <!-- SOCIAL HUB: all links from Linktree (TikTok, Instagram, X/Twitter, Twitch) included -->
+    <!-- SOCIAL HUB: TikTok, Instagram, X/Twitter are NOT clickable (demo only), Twitch remains functional -->
     <div class="social-hub">
         <div style="font-weight: 500;"><i class="fas fa-hashtag"></i> @hiyuhh · everywhere</div>
         <div class="social-links-group">
-            <a href="https://www.tiktok.com/@hiyuhh" target="_blank" class="social-icon-link"><i class="fab fa-tiktok"></i> TikTok</a>
-            <a href="https://www.instagram.com/hiyuhh/" target="_blank" class="social-icon-link"><i class="fab fa-instagram"></i> Instagram</a>
-            <a href="https://x.com/hiyuhh" target="_blank" class="social-icon-link"><i class="fab fa-twitter"></i> X / Twitter</a>
+            <!-- non-clickable demo elements (no href, no link) -->
+            <span class="social-icon-link non-clickable"><i class="fab fa-tiktok"></i> TikTok</span>
+            <span class="social-icon-link non-clickable"><i class="fab fa-instagram"></i> Instagram</span>
+            <span class="social-icon-link non-clickable"><i class="fab fa-twitter"></i> X / Twitter</span>
+            <!-- only Twitch button remains active & clickable -->
             <a href="https://www.twitch.tv/hiyuhh" target="_blank" class="social-icon-link"><i class="fab fa-twitch"></i> Twitch</a>
         </div>
     </div>
@@ -583,7 +600,7 @@
         </div>
     </section>
 
-    <!-- subtle footer: purely informational -->
+    <!-- footer: purely informational -->
     <footer>
         <div>⚡ Hiyuhh — living rent free in your recommended feed • all streams 18+ • be excellent to each other</div>
         <div style="margin-top: 0.5rem;">✨ concept website — built to show the power of a creator hub beyond link-in-bio 💜</div>
@@ -592,23 +609,33 @@
 
 <script>
     (function() {
-        console.log("🎮 HIYUHH — Immersive creator hub | all socials from Linktree embedded | brand + community");
+        console.log("🎮 HIYUHH — immersive creator hub | only Twitch button clickable (TikTok/IG/X are demo placeholders)");
         
-        // make all external social links open safely (already have target="_blank")
+        // Discord button demo alert (non-functional)
         const discordBtn = document.querySelector('.btn-discord');
         if(discordBtn) {
             discordBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                alert('🤝 Discord server preview — join the actual community via invite link');
+                alert('🤝 Discord community hub — join the actual server via invite link (demo interaction)');
             });
         }
-        // featured highlight interaction placeholder
+        // Featured highlight card dummy interaction
         const featuredCard = document.querySelector('.featured-card');
         if(featuredCard) {
             featuredCard.addEventListener('click', () => {
-                console.log("✨ featured moment — full clip integration ready");
+                console.log("✨ featured moment — full clip integration ready (customizable)");
             });
         }
+        // Additional: ensure none of the non-clickable social spans trigger any navigation
+        const nonClickableSpans = document.querySelectorAll('.social-icon-link.non-clickable');
+        nonClickableSpans.forEach(span => {
+            span.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // silent: these are purely visual placeholders
+                console.log("🔘 Social demo placeholder (non-clickable)");
+            });
+        });
     })();
 </script>
 </body>
