@@ -206,14 +206,37 @@
             gap: 2rem;
         }
 
+        /* profile image + name row */
+        .hero-left {
+            flex: 1;
+        }
+        
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--glow-purple);
+            background: #1a1e2a;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.3);
+        }
+        
         .hero-left h1 {
-            font-size: 5.5rem;
+            font-size: 5rem;
             line-height: 1;
             background: linear-gradient(125deg, #fff, var(--glow-purple), var(--neon-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
         }
 
         .tagline {
@@ -221,6 +244,7 @@
             font-weight: 500;
             color: var(--text-muted);
             max-width: 500px;
+            margin-top: 0.8rem;
         }
 
         .personality-badge {
@@ -260,7 +284,7 @@
             border: none;
         }
 
-        /* featured highlight (key differentiator) */
+        /* featured highlight */
         .featured-section {
             margin: 3rem 0 4rem;
         }
@@ -298,6 +322,47 @@
 
         .featured-info {
             padding: 1.5rem;
+        }
+
+        /* schedule grid (new) */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .schedule-card {
+            background: rgba(16, 20, 30, 0.7);
+            backdrop-filter: blur(6px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.2s;
+        }
+        
+        .schedule-card:hover {
+            border-color: var(--glow-purple);
+            transform: translateY(-5px);
+        }
+        
+        .schedule-day {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--glow-purple);
+        }
+        
+        .schedule-time {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+        
+        .schedule-game {
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         /* clips grid (light teaser) */
@@ -355,7 +420,7 @@
             border: 1px solid rgba(88, 101, 242, 0.3);
         }
 
-        /* social quick links (branded row from linktree) */
+        /* social quick links (branded row) */
         .social-hub {
             background: rgba(12, 15, 22, 0.7);
             backdrop-filter: blur(8px);
@@ -376,7 +441,6 @@
             flex-wrap: wrap;
         }
 
-        /* non-clickable demo style for specific buttons */
         .social-icon-link.non-clickable {
             cursor: default;
             opacity: 0.9;
@@ -411,7 +475,6 @@
             transform: translateY(-2px);
         }
 
-        /* Responsive */
         @media (max-width: 880px) {
             .hero-left h1 {
                 font-size: 3.8rem;
@@ -421,6 +484,10 @@
             }
             .nav-links {
                 gap: 1.5rem;
+            }
+            .profile-pic {
+                width: 70px;
+                height: 70px;
             }
         }
 
@@ -438,6 +505,10 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .profile-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         footer {
@@ -452,31 +523,30 @@
 </head>
 <body>
 <div class="container">
-    <!-- navigation: minimal but branded -->
+    <!-- navigation -->
     <nav>
         <div class="logo">HIYU<span style="color:var(--glow-purple);">HH</span></div>
         <div class="nav-links">
             <a href="#">Home</a>
             <a href="#about">Vibe</a>
+            <a href="#schedule">Schedule</a>
             <a href="#clips">Moments</a>
             <a href="#community">Connect</a>
         </div>
     </nav>
 
-    <!-- SOCIAL HUB: TikTok, Instagram, X/Twitter are NOT clickable (demo only), Twitch remains functional -->
+    <!-- SOCIAL HUB: TikTok, Instagram, X are non-clickable placeholders; Twitch active -->
     <div class="social-hub">
         <div style="font-weight: 500;"><i class="fas fa-hashtag"></i> @hiyuhh · everywhere</div>
         <div class="social-links-group">
-            <!-- non-clickable demo elements (no href, no link) -->
             <span class="social-icon-link non-clickable"><i class="fab fa-tiktok"></i> TikTok</span>
             <span class="social-icon-link non-clickable"><i class="fab fa-instagram"></i> Instagram</span>
             <span class="social-icon-link non-clickable"><i class="fab fa-twitter"></i> X / Twitter</span>
-            <!-- only Twitch button remains active & clickable -->
             <a href="https://www.twitch.tv/hiyuhh" target="_blank" class="social-icon-link"><i class="fab fa-twitch"></i> Twitch</a>
         </div>
     </div>
 
-    <!-- MAIN HOME SECTION — hero + embed + personality badge -->
+    <!-- MAIN HOME SECTION: includes profile image from Twitch + name -->
     <section class="hero-section">
         <div class="hero-grid">
             <div class="hero-left">
@@ -485,7 +555,12 @@
                     <span style="font-weight: 600;">LIVE on Twitch</span>
                     <span style="font-size:0.75rem; background:#00000066; padding:0.2rem 0.6rem; border-radius: 30px;">🔫 valorant / variety</span>
                 </div>
-                <h1>Hiyuhh</h1>
+                <div class="profile-row">
+                    <img class="profile-pic" src="https://static-cdn.jtvnw.net/jtv_user_pictures/b2441685-0327-4537-a286-c5193df39ddf-profile_image-300x300.png" 
+                         alt="Hiyuhh Twitch avatar"
+                         onerror="this.onerror=null; this.src='https://placehold.co/300x300/1a1e2a/c084fc?text=HI';">
+                    <h1>Hiyuhh</h1>
+                </div>
                 <div class="tagline">chaotic good • gremlin energy • FPS main character</div>
                 <div class="btn-group">
                     <a href="https://www.twitch.tv/hiyuhh" target="_blank" class="btn btn-primary"><i class="fab fa-twitch"></i> Watch Live</a>
@@ -496,7 +571,7 @@
                     <i class="fas fa-dice-d6" style="margin-right: 8px;"></i> "0.0 KD but 100% vibes" — probably raging at apex
                 </div>
             </div>
-            <!-- Twitch Embed panel: real stream preview -->
+            <!-- Twitch Embed panel -->
             <div class="embed-card">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.7rem;">
                     <span><i class="fab fa-twitch" style="color: var(--twitch-purple);"></i> twitch.tv/hiyuhh</span>
@@ -513,7 +588,7 @@
         </div>
     </section>
 
-    <!-- FEATURED SECTION: strongest differentiator vs linktree -->
+    <!-- FEATURED SECTION: clip of the week -->
     <div class="featured-section">
         <div class="section-title">
             <i class="fas fa-crown" style="color: var(--neon-pink);"></i> 
@@ -536,7 +611,7 @@
     </div>
 
     <!-- ABOUT SECTION (light but personal) -->
-    <section id="about" style="margin: 2rem 0 3rem;">
+    <section id="about" style="margin: 2rem 0 1rem;">
         <div class="section-title">
             <i class="fas fa-user-ninja"></i>
             <span>about that chaos gremlin</span>
@@ -548,6 +623,39 @@
                 <span class="personality-badge" style="background:#00000033;"><i class="fas fa-mask"></i> vtuber + facecam</span>
             </div>
             <div style="margin-top: 1rem; font-size:0.8rem; color:#7b86a3;">✨ full bio and setup coming soon — this space is ready for your story ✨</div>
+        </div>
+    </section>
+
+    <!-- NEW STREAM SCHEDULE SECTION (visual and structured) -->
+    <section id="schedule" style="margin: 2rem 0 2rem;">
+        <div class="section-title">
+            <i class="fas fa-calendar-alt" style="color: var(--neon-cyan);"></i>
+            <span>stream schedule · weekly chaos</span>
+        </div>
+        <div class="schedule-grid">
+            <div class="schedule-card">
+                <div class="schedule-day">MON</div>
+                <div class="schedule-time">8PM – 12AM ET</div>
+                <div class="schedule-game">🎯 Valorant / FPS grind</div>
+            </div>
+            <div class="schedule-card">
+                <div class="schedule-day">WED</div>
+                <div class="schedule-time">8PM – 11PM ET</div>
+                <div class="schedule-game">🎭 Variety / horror / indie</div>
+            </div>
+            <div class="schedule-card">
+                <div class="schedule-day">FRI</div>
+                <div class="schedule-time">9PM – 1AM ET</div>
+                <div class="schedule-game">🔥 Community night + viewer games</div>
+            </div>
+            <div class="schedule-card">
+                <div class="schedule-day">SAT</div>
+                <div class="schedule-time">4PM – 9PM ET</div>
+                <div class="schedule-game">🎮 Marathon / just chatting</div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 1rem; font-size:0.8rem; color:#7b86a3;">
+            <i class="fas fa-clock"></i> All times Eastern (ET) — extra pop-up streams announced on Discord
         </div>
     </section>
 
@@ -576,7 +684,7 @@
         </div>
     </section>
 
-    <!-- COMMUNITY SECTION: focus on connection, no merch -->
+    <!-- COMMUNITY SECTION: focus on connection -->
     <section id="community">
         <div class="section-title">
             <i class="fas fa-heart" style="color: var(--neon-pink);"></i>
@@ -600,7 +708,7 @@
         </div>
     </section>
 
-    <!-- footer: purely informational -->
+    <!-- footer -->
     <footer>
         <div>⚡ Hiyuhh — living rent free in your recommended feed • all streams 18+ • be excellent to each other</div>
         <div style="margin-top: 0.5rem;">✨ concept website — built to show the power of a creator hub beyond link-in-bio 💜</div>
@@ -609,9 +717,8 @@
 
 <script>
     (function() {
-        console.log("🎮 HIYUHH — immersive creator hub | only Twitch button clickable (TikTok/IG/X are demo placeholders)");
+        console.log("🎮 HIYUHH — now with profile image + weekly schedule section | non-clickable social placeholders");
         
-        // Discord button demo alert (non-functional)
         const discordBtn = document.querySelector('.btn-discord');
         if(discordBtn) {
             discordBtn.addEventListener('click', (e) => {
@@ -619,20 +726,18 @@
                 alert('🤝 Discord community hub — join the actual server via invite link (demo interaction)');
             });
         }
-        // Featured highlight card dummy interaction
+        
         const featuredCard = document.querySelector('.featured-card');
         if(featuredCard) {
             featuredCard.addEventListener('click', () => {
-                console.log("✨ featured moment — full clip integration ready (customizable)");
+                console.log("✨ featured moment — full clip integration ready");
             });
         }
-        // Additional: ensure none of the non-clickable social spans trigger any navigation
+        
         const nonClickableSpans = document.querySelectorAll('.social-icon-link.non-clickable');
         nonClickableSpans.forEach(span => {
             span.addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation();
-                // silent: these are purely visual placeholders
                 console.log("🔘 Social demo placeholder (non-clickable)");
             });
         });
