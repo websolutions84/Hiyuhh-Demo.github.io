@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>HIYUHH · live, chaotic, gaming</title>
+    <meta name="description" content="Hiyuhh — variety streamer, FPS gremlin, and full-time vibe. Watch live, join the community, and experience the chaos.">
+    <!-- Google Fonts + Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #05070a;
+            --bg-surface: #0f1219;
+            --card-bg: rgba(18, 22, 32, 0.75);
+            --glow-purple: #c084fc;
+            --neon-pink: #ff4d8c;
+            --neon-cyan: #2dd4bf;
+            --twitch-purple: #9147ff;
+            --text-light: #f0f3fa;
+            --text-muted: #979fb0;
+            --border-glow: rgba(192, 132, 252, 0.25);
+            --border-radius-xl: 2rem;
+            --border-radius-lg: 1.5rem;
+            --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* animated bg gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 20%, rgba(145, 71, 255, 0.12), transparent 55%),
+                        radial-gradient(circle at 20% 80%, rgba(45, 212, 191, 0.08), transparent 60%);
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .container {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* typography */
+        h1, h2, h3, .logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-left: 4px solid var(--glow-purple);
+            padding-left: 1.2rem;
+        }
+
+        /* navigation (minimal, clean) */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ffffff, var(--glow-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--glow-purple);
+        }
+
+        /* buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.8rem 0 0.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.85rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            text-decoration: none;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 12, 18, 0.6);
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, #7c3aed, #c084fc);
+            border: none;
+            box-shadow: 0 10px 20px -5px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.05);
+            box-shadow: 0 18px 28px -8px rgba(124, 58, 237, 0.6);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--glow-purple);
+            background: rgba(192, 132, 252, 0.08);
+        }
+
+        .btn-outline:hover {
+            background: rgba(192, 132, 252, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-discord {
+            background: #5865f2;
+            border: none;
+        }
+
+        /* live badge */
+        .live-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 75, 110, 0.5);
+        }
+
+        .pulse {
+            width: 12px;
+            height: 12px;
+            background: #ff3355;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff3355;
+            animation: pulse 1.4s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1);}
+            50% { opacity: 0.6; transform: scale(1.2);}
+            100% { opacity: 1; transform: scale(1);}
+        }
+
+        /* hero */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin: 2rem 0 4rem;
+        }
+
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero-left h1 {
+            font-size: 5.5rem;
+            line-height: 1;
+            background: linear-gradient(125deg, #fff, var(--glow-purple), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        .personality-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            width: fit-content;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            backdrop-filter: blur(4px);
+        }
+
+        /* embed panel */
+        .embed-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--border-radius-xl);
+            border: 1px solid var(--border-glow);
+            padding: 1.2rem;
+            width: 100%;
+            max-width: 580px;
+            transition: 0.2s;
+            box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        .twitch-frame {
+            aspect-ratio: 16/9;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            background: #181c27;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* featured highlight (key differentiator) */
+        .featured-section {
+            margin: 3rem 0 4rem;
+        }
+
+        .featured-card {
+            background: linear-gradient(145deg, #10141f, #0b0e16);
+            border-radius: var(--border-radius-xl);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            overflow: hidden;
+            transition: 0.25s;
+        }
+
+        .featured-card:hover {
+            border-color: var(--glow-purple);
+            transform: scale(1.01);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .featured-preview {
+            aspect-ratio: 16/9;
+            background: radial-gradient(circle at 30% 10%, #2a1e3a, #0b0a12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            color: #aaa;
+        }
+
+        .featured-preview i {
+            font-size: 4rem;
+            color: var(--glow-purple);
+            opacity: 0.8;
+        }
+
+        .featured-info {
+            padding: 1.5rem;
+        }
+
+        /* clips grid (light teaser) */
+        .clips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .clip-item {
+            background: rgba(16, 20, 30, 0.7);
+            border-radius: 1.5rem;
+            border: 1px solid #252a36;
+            transition: 0.2s;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .clip-item:hover {
+            border-color: var(--glow-purple);
+            transform: translateY(-6px);
+        }
+
+        .clip-thumb {
+            aspect-ratio: 16/9;
+            background: #121622;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5f6a84;
+            font-size: 2rem;
+        }
+
+        .clip-thumb i {
+            opacity: 0.5;
+        }
+
+        .clip-caption {
+            padding: 1rem;
+            font-weight: 500;
+        }
+
+        /* Community section */
+        .community-card {
+            background: linear-gradient(125deg, #181d2b, #0f121c);
+            border-radius: var(--border-radius-xl);
+            padding: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(88, 101, 242, 0.3);
+        }
+
+        /* social quick links (branded row from linktree) */
+        .social-hub {
+            background: rgba(12, 15, 22, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 3rem;
+            padding: 1rem 1.8rem;
+            margin: 2rem 0 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(192, 132, 252, 0.2);
+        }
+
+        .social-links-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icon-link {
+            background: rgba(255,255,255,0.03);
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .social-icon-link:hover {
+            background: var(--glow-purple);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 880px) {
+            .hero-left h1 {
+                font-size: 3.8rem;
+            }
+            .container {
+                padding: 0 1.5rem;
+            }
+            .nav-links {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .hero-grid {
+                flex-direction: column;
+            }
+            .embed-card {
+                max-width: 100%;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .social-hub {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 0;
+            color: #5f6a84;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- navigation: minimal but branded -->
+    <nav>
+        <div class="logo">HIYU<span style="color:var(--glow-purple);">HH</span></div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#about">Vibe</a>
+            <a href="#clips">Moments</a>
+            <a href="#community">Connect</a>
+        </div>
+    </nav>
+
+    <!-- SOCIAL HUB: all links from Linktree (TikTok, Instagram, X/Twitter, Twitch) included -->
+    <div class="social-hub">
+        <div style="font-weight: 500;"><i class="fas fa-hashtag"></i> @hiyuhh · everywhere</div>
+        <div class="social-links-group">
+            <a href="https://www.tiktok.com/@hiyuhh" target="_blank" class="social-icon-link"><i class="fab fa-tiktok"></i> TikTok</a>
+            <a href="https://www.instagram.com/hiyuhh/" target="_blank" class="social-icon-link"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://x.com/hiyuhh" target="_blank" class="social-icon-link"><i class="fab fa-twitter"></i> X / Twitter</a>
+            <a href="https://www.twitch.tv/hiyuhh" target="_blank" class="social-icon-link"><i class="fab fa-twitch"></i> Twitch</a>
+        </div>
+    </div>
+
+    <!-- MAIN HOME SECTION — hero + embed + personality badge -->
+    <section class="hero-section">
+        <div class="hero-grid">
+            <div class="hero-left">
+                <div class="live-status">
+                    <span class="pulse"></span>
+                    <span style="font-weight: 600;">LIVE on Twitch</span>
+                    <span style="font-size:0.75rem; background:#00000066; padding:0.2rem 0.6rem; border-radius: 30px;">🔫 valorant / variety</span>
+                </div>
+                <h1>Hiyuhh</h1>
+                <div class="tagline">chaotic good • gremlin energy • FPS main character</div>
+                <div class="btn-group">
+                    <a href="https://www.twitch.tv/hiyuhh" target="_blank" class="btn btn-primary"><i class="fab fa-twitch"></i> Watch Live</a>
+                    <a href="#" class="btn btn-outline btn-discord"><i class="fab fa-discord"></i> Join Community</a>
+                    <a href="#clips" class="btn btn-outline"><i class="fas fa-fire"></i> See Highlights</a>
+                </div>
+                <div class="personality-badge">
+                    <i class="fas fa-dice-d6" style="margin-right: 8px;"></i> "0.0 KD but 100% vibes" — probably raging at apex
+                </div>
+            </div>
+            <!-- Twitch Embed panel: real stream preview -->
+            <div class="embed-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.7rem;">
+                    <span><i class="fab fa-twitch" style="color: var(--twitch-purple);"></i> twitch.tv/hiyuhh</span>
+                    <span style="font-size:0.7rem; background:#00000077; padding:0.2rem 0.9rem; border-radius: 50px;">🔴 Live now</span>
+                </div>
+                <div class="twitch-frame">
+                    <iframe src="https://player.twitch.tv/?channel=hiyuhh&parent=localhost&parent=hiyuhh-website&autoplay=false" 
+                            allowfullscreen="true" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                    </iframe>
+                </div>
+                <div style="margin-top: 0.6rem; font-size: 0.7rem; color:#95a0b5;"><i class="fas fa-users"></i> 1.2k watching • latest: chaotic valo ranked</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED SECTION: strongest differentiator vs linktree -->
+    <div class="featured-section">
+        <div class="section-title">
+            <i class="fas fa-crown" style="color: var(--neon-pink);"></i> 
+            <span>featured moment — clip of the week</span>
+        </div>
+        <div class="featured-card">
+            <div class="featured-preview">
+                <i class="fas fa-play-circle"></i>
+                <span style="font-size: 1.2rem; font-weight: 500;">⚡ 1v5 ace + rage clip (best of July)</span>
+                <span style="font-size: 0.8rem;">🔥 142k views | watch the full chaos</span>
+            </div>
+            <div class="featured-info">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                    <span><i class="fas fa-tag"></i> #valorant #clutch</span>
+                    <a href="#" style="color: var(--glow-purple); text-decoration: none;">Watch replay →</a>
+                </div>
+                <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">This is the kind of content that Link-in-bio pages can't deliver — an actual preview of what makes Hiyuhh, Hiyuhh. Full highlights below 👇</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION (light but personal) -->
+    <section id="about" style="margin: 2rem 0 3rem;">
+        <div class="section-title">
+            <i class="fas fa-user-ninja"></i>
+            <span>about that chaos gremlin</span>
+        </div>
+        <div style="background: rgba(15, 18, 25, 0.6); border-radius: 1.8rem; padding: 1.8rem; border: 1px solid rgba(192,132,252,0.1);">
+            <p style="font-size: 1.1rem; max-width: 85%;">🎮 Hiyuhh — variety streamer, FPS enthusiast, and professional yapper. From raging in Valorant to getting jumpscared in horror games, every stream is a vibe. Let's build a community where being chaotic is a flex. 🤙</p>
+            <div style="margin-top: 1.2rem; display: flex; gap: 1rem;">
+                <span class="personality-badge" style="background:#00000033;"><i class="fas fa-gamepad"></i> main: valorant/apex</span>
+                <span class="personality-badge" style="background:#00000033;"><i class="fas fa-mask"></i> vtuber + facecam</span>
+            </div>
+            <div style="margin-top: 1rem; font-size:0.8rem; color:#7b86a3;">✨ full bio and setup coming soon — this space is ready for your story ✨</div>
+        </div>
+    </section>
+
+    <!-- CLIPS / HIGHLIGHTS GRID (teaser) -->
+    <section id="clips">
+        <div class="section-title">
+            <i class="fas fa-film"></i>
+            <span>highlights · best moments</span>
+        </div>
+        <div class="clips-grid">
+            <div class="clip-item">
+                <div class="clip-thumb"><i class="fas fa-play-circle fa-2x"></i></div>
+                <div class="clip-caption">💀 1v3 + disrespect finish</div>
+            </div>
+            <div class="clip-item">
+                <div class="clip-thumb"><i class="fas fa-laugh-beam fa-2x"></i></div>
+                <div class="clip-caption">😂 rage moment: "WHY AM I LIKE THIS"</div>
+            </div>
+            <div class="clip-item">
+                <div class="clip-thumb"><i class="fas fa-ghost fa-2x"></i></div>
+                <div class="clip-caption">🎃 horror game scream compilation</div>
+            </div>
+        </div>
+        <div style="text-align: right; margin-top: 0.5rem;">
+            <span style="font-size: 0.75rem; background: #1a1e2a; padding: 0.2rem 1rem; border-radius: 30px;">🎬 more clips on Twitch / upcoming library</span>
+        </div>
+    </section>
+
+    <!-- COMMUNITY SECTION: focus on connection, no merch -->
+    <section id="community">
+        <div class="section-title">
+            <i class="fas fa-heart" style="color: var(--neon-pink);"></i>
+            <span>join the hive · community hub</span>
+        </div>
+        <div class="community-card">
+            <div>
+                <h3 style="font-size: 1.9rem; margin-bottom: 0.5rem;">🤝 become a Legion member</h3>
+                <p style="color: #b4bbd6; max-width: 480px;">Discord game nights, watch parties, emotes, and zero toxicity. 12k+ members already feel at home.</p>
+                <div style="margin-top: 1.5rem;">
+                    <a href="#" class="btn btn-discord" style="background:#5865f2; padding:0.7rem 2rem;"><i class="fab fa-discord"></i> Join Discord →</a>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <i class="fas fa-users" style="font-size: 4rem; opacity: 0.3;"></i>
+                <div><span class="personality-badge" style="display: inline-block;">✨ active voice chats & events</span></div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 1rem; font-size:0.85rem; color:#8b93ae;">
+            community rules & events weekly — custom roles, fan art, and collab nights
+        </div>
+    </section>
+
+    <!-- subtle footer: purely informational -->
+    <footer>
+        <div>⚡ Hiyuhh — living rent free in your recommended feed • all streams 18+ • be excellent to each other</div>
+        <div style="margin-top: 0.5rem;">✨ concept website — built to show the power of a creator hub beyond link-in-bio 💜</div>
+    </footer>
+</div>
+
+<script>
+    (function() {
+        console.log("🎮 HIYUHH — Immersive creator hub | all socials from Linktree embedded | brand + community");
+        
+        // make all external social links open safely (already have target="_blank")
+        const discordBtn = document.querySelector('.btn-discord');
+        if(discordBtn) {
+            discordBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('🤝 Discord server preview — join the actual community via invite link');
+            });
+        }
+        // featured highlight interaction placeholder
+        const featuredCard = document.querySelector('.featured-card');
+        if(featuredCard) {
+            featuredCard.addEventListener('click', () => {
+                console.log("✨ featured moment — full clip integration ready");
+            });
+        }
+    })();
+</script>
+</body>
+</html>
